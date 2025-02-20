@@ -28,7 +28,7 @@ final class HomeViewController: UIViewController {
 
         view.backgroundColor = .prBackground
         
-        @PouringDefaults(key: SavingInfo.대장이름.rawValue, empty: "아직없음") var daejang
+        @PouringDefaults(key: .대장이름, empty: "아직없음") var daejang
         print(daejang)
         
         view.addSubview(button)
@@ -39,7 +39,7 @@ final class HomeViewController: UIViewController {
         
         button.rx.tap
             .bind { _ in
-                daejang = "이원선"
+                daejang = "김기영"
             }.disposed(by: disposeBag)
     }
 

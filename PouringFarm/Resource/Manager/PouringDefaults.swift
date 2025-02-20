@@ -10,16 +10,21 @@ import Foundation
 @propertyWrapper
 struct PouringDefaults<T> {
     
-    let key: String
+    let key: SavingInfo
     let empty: T
     
     var wrappedValue: T {
         get {
-            return UserDefaults.standard.object(forKey: key) as? T ?? empty
+            return UserDefaults.standard.object(forKey: key.rawValue) as? T ?? empty
         }
         set {
-            UserDefaults.standard.set(newValue as T, forKey: key)
+            UserDefaults.standard.set(newValue as T, forKey: key.rawValue)
         }
+    }
+    
+    init(key: SavingInfo, empty: T) {
+        self.key = key
+        self.empty = empty
     }
 }
 
