@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4314D7C42D672248007EBA65 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4314D7C32D672248007EBA65 /* SnapKit */; };
+		4314D7C72D672263007EBA65 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4314D7C62D672263007EBA65 /* RxCocoa */; };
+		4314D7C92D672263007EBA65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4314D7C82D672263007EBA65 /* RxSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4314D7A22D671E0F007EBA65 /* PouringFarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PouringFarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4314D7C92D672263007EBA65 /* RxSwift in Frameworks */,
+				4314D7C72D672263007EBA65 /* RxCocoa in Frameworks */,
+				4314D7C42D672248007EBA65 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +87,9 @@
 			);
 			name = PouringFarm;
 			packageProductDependencies = (
+				4314D7C32D672248007EBA65 /* SnapKit */,
+				4314D7C62D672263007EBA65 /* RxCocoa */,
+				4314D7C82D672263007EBA65 /* RxSwift */,
 			);
 			productName = PouringFarm;
 			productReference = 4314D7A22D671E0F007EBA65 /* PouringFarm.app */;
@@ -107,6 +119,10 @@
 			);
 			mainGroup = 4314D7992D671E0F007EBA65;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4314D7C22D672248007EBA65 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4314D7C52D672263007EBA65 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4314D7A32D671E0F007EBA65 /* Products */;
 			projectDirPath = "";
@@ -147,7 +163,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CQ3CNQ79S;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PouringFarm/Info.plist;
+				INFOPLIST_FILE = PouringFarm/APP/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "푸링팜";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -181,7 +197,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CQ3CNQ79S;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PouringFarm/Info.plist;
+				INFOPLIST_FILE = PouringFarm/APP/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "푸링팜";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -347,6 +363,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4314D7C22D672248007EBA65 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		4314D7C52D672263007EBA65 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4314D7C32D672248007EBA65 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4314D7C22D672248007EBA65 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		4314D7C62D672263007EBA65 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4314D7C52D672263007EBA65 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		4314D7C82D672263007EBA65 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4314D7C52D672263007EBA65 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4314D79A2D671E0F007EBA65 /* Project object */;
 }
