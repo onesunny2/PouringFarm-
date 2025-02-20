@@ -6,24 +6,41 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SnapKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
+    
+    private let disposeBag = DisposeBag()
+    
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setTitle("저장", for: .normal)
+        button.backgroundColor = .clear
+        button.setTitleColor(.prMain, for: .normal)
+    
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .prBackground
+        
+        @PouringDefaults(key: SavingInfo.대장이름.rawValue, empty: "아직없음") var daejang
+        print(daejang)
+        
+        view.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.center.equalTo(view.safeAreaLayoutGuide)
+            make.size.equalTo(150)
+        }
+        
+        button.rx.tap
+            .bind { _ in
+                daejang = "이원선"
+            }.disposed(by: disposeBag)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
