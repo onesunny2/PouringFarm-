@@ -46,9 +46,10 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
             $0.width.lessThanOrEqualTo(self.frame.width)
         }
 
+        let stackSpacing: CGFloat = 6
         stackView.alignment = .center
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: stackSpacing, leading: stackSpacing, bottom: stackSpacing, trailing: stackSpacing)
     }
     
     func configureView() {
