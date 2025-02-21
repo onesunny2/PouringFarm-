@@ -38,6 +38,16 @@ extension SelectPouringViewController: UICollectionViewDelegate, UICollectionVie
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let vc = SelectPopUpViewController()
+        
+        definesPresentationContext = true
+        vc.modalPresentationStyle = .overCurrentContext
+        
+        present(vc, animated: true)
+    }
 }
 
 // 기본셋팅

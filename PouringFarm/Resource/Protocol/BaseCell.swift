@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol BaseCell {
+protocol BaseCell: AnyObject {
     func configureHierarchy()
     func configureLayout()
     func configureView()
