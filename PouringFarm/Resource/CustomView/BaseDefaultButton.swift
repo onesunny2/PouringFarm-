@@ -12,8 +12,10 @@ final class BaseDefaultButton: UIButton {
     init(_ title: String, bgColor: UIColor = .prBackground) {
         super.init(frame: .zero)
         
-        setTitle(title, for: .normal)
+        let transformTitle = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15, weight: .medium)])
+        
         setTitleColor(.prMain, for: .normal)
+        setAttributedTitle(transformTitle, for: .normal)
         backgroundColor = bgColor
     }
     

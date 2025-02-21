@@ -12,12 +12,13 @@ final class SelectPopUpView: UIView, BaseView {
 
     private let mainPopupView = UIView()
     let pouringImage: BaseUIImageView
-    let nameStackView = UIStackView()
+    private let nameStackView = UIStackView()
     var pouringName = BaseUILabel()
     private let middleStackView = UIStackView()
-    let topDivider = UIView()
-    let pouringIntro = BaseUILabel(size: 14, weight: .medium, line: 0)
-    let bottomDivider = UIView()
+    private let topDivider = UIView()
+    let pouringIntro = BaseUILabel(size: 13, weight: .medium, line: 0)
+    private let bottomDivider = UIView()
+    private let buttonLine = UIView()
     let cancelButton = BaseDefaultButton("취소", bgColor: .prMain.withAlphaComponent(0.2))
     let startButton = BaseDefaultButton("시작하기")
     
@@ -38,12 +39,13 @@ final class SelectPopUpView: UIView, BaseView {
         super.layoutSubviews()
         
         configureLayout()
-        nameStackView.cornerRadius()
+        mainPopupView.basicCornerRadius(10)
+        nameStackView.strokeCornerRadius()
     }
 
     func configureHierarchy() {
         self.addSubview(mainPopupView)
-        [pouringImage, nameStackView, middleStackView, cancelButton, startButton].forEach {
+        [pouringImage, nameStackView, middleStackView, buttonLine, cancelButton, startButton].forEach {
             mainPopupView.addSubview($0)
         }
         nameStackView.addArrangedSubview(pouringName)
@@ -59,31 +61,31 @@ final class SelectPopUpView: UIView, BaseView {
         
         mainPopupView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.height.equalTo(screen.height * 0.5)
+            $0.height.equalTo(screen.height * 0.48)
             $0.width.equalTo(screen.width * 0.8)
         }
         
         pouringImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(55)
+            $0.top.equalToSuperview().inset(50)
             $0.size.equalTo(screen.width * 0.3)
         }
         
         nameStackView.snp.makeConstraints {
-            $0.top.equalTo(pouringImage.snp.bottom).offset(4)
+            $0.top.equalTo(pouringImage.snp.bottom).offset(6)
             $0.centerX.equalToSuperview()
             $0.width.lessThanOrEqualTo(mainWidth)
         }
         
         middleStackView.snp.makeConstraints {
             $0.top.equalTo(nameStackView.snp.bottom).offset(12)
-            $0.bottom.equalToSuperview().inset(60)
-            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(50)
+            $0.width.lessThanOrEqualTo(mainWidth)
         }
         
         topDivider.snp.makeConstraints {
             $0.centerX.equalTo(mainPopupView)
-            $0.width.equalTo(mainWidth * 0.33)
+            $0.width.equalTo(mainWidth * 0.75)
             $0.height.equalTo(1)
         }
         
@@ -93,8 +95,15 @@ final class SelectPopUpView: UIView, BaseView {
         }
         
         bottomDivider.snp.makeConstraints {
+            $0.centerX.equalTo(mainPopupView)
             $0.width.equalTo(mainWidth)
             $0.height.equalTo(1)
+        }
+        
+        buttonLine.snp.makeConstraints {
+            $0.bottom.equalTo(middleStackView.snp.bottom)
+            $0.height.equalTo(1)
+            $0.horizontalEdges.equalToSuperview()
         }
         
         cancelButton.snp.makeConstraints {
@@ -115,14 +124,15 @@ final class SelectPopUpView: UIView, BaseView {
         
         mainPopupView.backgroundColor = .prBackground
         topDivider.backgroundColor = .prMain
-        bottomDivider.backgroundColor = .prMain.withAlphaComponent(0.5)
+        bottomDivider.backgroundColor = .clear
+        buttonLine.backgroundColor = .prMain.withAlphaComponent(0.5)
 
         setNameStackView()
         setMiddleStackView()
     }
     
     private func setNameStackView() {
-        let stackSpacing: CGFloat = 6
+        let stackSpacing: CGFloat = 8
         nameStackView.isLayoutMarginsRelativeArrangement = true
         nameStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: stackSpacing, leading: stackSpacing, bottom: stackSpacing, trailing: stackSpacing)
     }
