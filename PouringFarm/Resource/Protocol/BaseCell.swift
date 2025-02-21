@@ -8,7 +8,7 @@
 import Foundation
 
 protocol BaseCell {
-    
     func configureHierarchy()
     func configureLayout()
+    func configureView()
 }
