@@ -13,6 +13,10 @@ enum PouringName: String {
     case 반짝푸링 = "반짝반짝 푸링이"
     case 준비중 = "준비중이에요"
     
+    // TODO: 더 효율적으로 작성하는 법
+    static let selectImgList: [String] =
+        [PouringName.따끔푸링.imageName(10), PouringName.헤실푸링.imageName(10), PouringName.반짝푸링.imageName(10)] + Array(repeating: PouringName.준비중.imageName(), count: 27)
+    
     var introduction: String {
         
         switch self {

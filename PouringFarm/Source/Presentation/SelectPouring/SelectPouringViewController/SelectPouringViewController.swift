@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class SelectPouringViewController: UIViewController {
     
     private let mainView = SelectPouringView()
+    private let viewModel = SelectPouringViewModel()
     
     override func loadView() {
         view = mainView
@@ -19,6 +22,14 @@ final class SelectPouringViewController: UIViewController {
         super.viewDidLoad()
 
         basicSetting()
+        bind()
+    }
+    
+    private func bind() {
+        
+        let input = SelectPouringViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
     }
 
 }
