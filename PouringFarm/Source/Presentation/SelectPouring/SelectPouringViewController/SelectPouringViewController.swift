@@ -45,6 +45,7 @@ extension SelectPouringViewController: UICollectionViewDelegate, UICollectionVie
         
         definesPresentationContext = true
         vc.modalPresentationStyle = .overCurrentContext
+//        vc.view.alpha = 0.5
         
         present(vc, animated: true)
     }

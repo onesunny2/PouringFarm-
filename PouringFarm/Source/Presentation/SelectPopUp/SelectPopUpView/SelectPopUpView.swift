@@ -10,15 +10,15 @@ import SnapKit
 
 final class SelectPopUpView: UIView, BaseView {
 
-    private let mainStackView = UIStackView()
+    private let mainPopupView = UIView()
     let pouringImage: BaseUIImageView
-    private let nameStackView = UIStackView()
-    let pouringName = BaseUILabel()
+    let nameStackView = UIStackView()
+    var pouringName = BaseUILabel()
     private let middleStackView = UIStackView()
     let topDivider = UIView()
-    let pouringIntro = BaseUILabel()
+    let pouringIntro = BaseUILabel(size: 14, weight: .medium, line: 0)
     let bottomDivider = UIView()
-    let cancelButton = BaseDefaultButton("취소", bgColor: .prMain.withAlphaComponent(0.5))
+    let cancelButton = BaseDefaultButton("취소", bgColor: .prMain.withAlphaComponent(0.2))
     let startButton = BaseDefaultButton("시작하기")
     
     init(_ type: PouringName, _ level: Int) {
@@ -27,15 +27,24 @@ final class SelectPopUpView: UIView, BaseView {
         
         super.init(frame: .zero)
         
+        pouringName.text = type.rawValue
+        pouringIntro.text = type.introduction
+        
         configureHierarchy()
-        configureLayout()
         configureView()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        configureLayout()
+        nameStackView.cornerRadius()
+    }
+
     func configureHierarchy() {
-        addSubview(mainStackView)
+        self.addSubview(mainPopupView)
         [pouringImage, nameStackView, middleStackView, cancelButton, startButton].forEach {
-            mainStackView.addArrangedSubview($0)
+            mainPopupView.addSubview($0)
         }
         nameStackView.addArrangedSubview(pouringName)
         [topDivider, pouringIntro, bottomDivider].forEach {
@@ -44,10 +53,11 @@ final class SelectPopUpView: UIView, BaseView {
     }
     
     func configureLayout() {
+
+        let screen = UIScreen.main.bounds
+        let mainWidth = screen.width * 0.8
         
-        guard let screen = window?.windowScene?.screen.bounds else { return }
-        
-        mainStackView.snp.makeConstraints {
+        mainPopupView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.height.equalTo(screen.height * 0.5)
             $0.width.equalTo(screen.width * 0.8)
@@ -55,24 +65,25 @@ final class SelectPopUpView: UIView, BaseView {
         
         pouringImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(45)
+            $0.top.equalToSuperview().inset(55)
             $0.size.equalTo(screen.width * 0.3)
         }
         
         nameStackView.snp.makeConstraints {
             $0.top.equalTo(pouringImage.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
-            $0.width.lessThanOrEqualTo(self.frame.width)
+            $0.width.lessThanOrEqualTo(mainWidth)
         }
         
         middleStackView.snp.makeConstraints {
             $0.top.equalTo(nameStackView.snp.bottom).offset(12)
-            $0.bottom.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview().inset(60)
             $0.horizontalEdges.equalToSuperview()
         }
         
         topDivider.snp.makeConstraints {
-            $0.width.equalTo(self.frame.width * 0.33)
+            $0.centerX.equalTo(mainPopupView)
+            $0.width.equalTo(mainWidth * 0.33)
             $0.height.equalTo(1)
         }
         
@@ -82,37 +93,36 @@ final class SelectPopUpView: UIView, BaseView {
         }
         
         bottomDivider.snp.makeConstraints {
-            $0.width.equalTo(self.frame.width)
+            $0.width.equalTo(mainWidth)
             $0.height.equalTo(1)
         }
         
         cancelButton.snp.makeConstraints {
             $0.leading.bottom.equalToSuperview()
-            $0.top.equalTo(bottomDivider.snp.bottom)
-            $0.width.equalTo(self.frame.width * 0.5)
+            $0.top.equalTo(middleStackView.snp.bottom)
+            $0.width.equalTo(mainWidth * 0.5)
         }
         
         startButton.snp.makeConstraints {
             $0.trailing.bottom.equalToSuperview()
-            $0.top.equalTo(bottomDivider.snp.bottom)
-            $0.width.equalTo(self.frame.width * 0.5)
+            $0.top.equalTo(middleStackView.snp.bottom)
+            $0.width.equalTo(mainWidth * 0.5)
         }
     }
     
     func configureView() {
-        backgroundColor = .prMain
-        alpha = 0.5
+        backgroundColor = .black.withAlphaComponent(0.5)
         
+        mainPopupView.backgroundColor = .prBackground
         topDivider.backgroundColor = .prMain
-        bottomDivider.backgroundColor = .prMain.withAlphaComponent(0.7)
-        
+        bottomDivider.backgroundColor = .prMain.withAlphaComponent(0.5)
+
         setNameStackView()
         setMiddleStackView()
     }
     
     private func setNameStackView() {
         let stackSpacing: CGFloat = 6
-        nameStackView.alignment = .center
         nameStackView.isLayoutMarginsRelativeArrangement = true
         nameStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: stackSpacing, leading: stackSpacing, bottom: stackSpacing, trailing: stackSpacing)
     }
