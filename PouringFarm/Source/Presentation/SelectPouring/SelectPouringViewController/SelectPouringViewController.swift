@@ -18,6 +18,30 @@ final class SelectPouringViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        basicSetting()
     }
 
+}
+
+// collectionview 설정
+extension SelectPouringViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 24
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPouringCollectionViewCell.id, for: indexPath) as? SelectPouringCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+}
+
+// 기본셋팅
+extension SelectPouringViewController {
+    
+    private func basicSetting() {
+        mainView.selectConllectionView.delegate = self
+        mainView.selectConllectionView.dataSource = self
+    }
 }

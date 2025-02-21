@@ -18,9 +18,17 @@ final class SelectPouringView: UIView, BaseView {
         
         super.init(frame: frame)
         
+        selectConllectionView.collectionViewLayout = collectionviewFlowLayout()
+        
         configureHierarchy()
         configureLayout()
         configureView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+//        selectConllectionView.collectionViewLayout = collectionviewFlowLayout()
     }
 
     func configureHierarchy() {
@@ -37,6 +45,23 @@ final class SelectPouringView: UIView, BaseView {
     func configureView() {
         backgroundColor = .prBackground
         selectConllectionView.backgroundColor = .prMain
+        
+        selectConllectionView.register(SelectPouringCollectionViewCell.self, forCellWithReuseIdentifier: SelectPouringCollectionViewCell.id)
+    }
+    
+    private func collectionviewFlowLayout() -> UICollectionViewFlowLayout {
+        
+        let insetSpacing: CGFloat = 20
+        let cellSpacing: CGFloat = 25
+        let cellWidth: CGFloat = (UIScreen.main.bounds.width - (insetSpacing * 2 + cellSpacing * 2)) / 3
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = cellSpacing
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * 1.3)
+        layout.sectionInset = UIEdgeInsets(top: insetSpacing, left: insetSpacing, bottom: .zero, right: insetSpacing)
+        
+        return layout
     }
     
     @available(*, unavailable)
