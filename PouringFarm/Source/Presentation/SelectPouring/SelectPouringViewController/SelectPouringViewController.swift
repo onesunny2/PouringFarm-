@@ -8,11 +8,16 @@
 import UIKit
 
 final class SelectPouringViewController: UIViewController {
+    
+    private let mainView = SelectPouringView()
+    
+    override func loadView() {
+        view = mainView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .prBackground
     }
 
 }
