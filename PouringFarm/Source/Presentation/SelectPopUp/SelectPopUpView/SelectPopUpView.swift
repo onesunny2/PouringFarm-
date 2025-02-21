@@ -57,12 +57,12 @@ class SelectPopUpView: UIView, BaseView {
     func configureLayout() {
 
         let screen = UIScreen.main.bounds
-        let mainWidth = screen.width * 0.8
+        let mainWidth = screen.width * 0.7
         
         mainPopupView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.height.equalTo(screen.height * 0.48)
-            $0.width.equalTo(screen.width * 0.8)
+            $0.width.equalTo(mainWidth)
         }
         
         pouringImage.snp.makeConstraints {
