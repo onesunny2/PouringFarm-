@@ -46,5 +46,7 @@ extension SelectPouringViewController {
     private func basicSetting() {
         mainView.selectConllectionView.delegate = self
         mainView.selectConllectionView.dataSource = self
+        
+        navigationItem.title = NavigationTitle.캐릭터선택화면.text
     }
 }
