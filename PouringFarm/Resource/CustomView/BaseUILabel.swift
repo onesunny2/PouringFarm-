@@ -18,7 +18,6 @@ final class BaseUILabel: UILabel {
         self.textAlignment = .center
         self.numberOfLines = line
     }
- 
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
