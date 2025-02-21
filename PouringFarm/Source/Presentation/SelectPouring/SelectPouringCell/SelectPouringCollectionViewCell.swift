@@ -13,7 +13,8 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
     static let id = "SelectPouringCollectionViewCell"
     
     private let pouringImage: BaseUIImageView
-    private let pouringName = UILabel()
+    private let stackView = UIStackView()
+    private let pouringName = BaseUILabel()
     
     override init(frame: CGRect) {
         
@@ -27,7 +28,10 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
     }
     
     func configureHierarchy() {
-        contentView.addSubview(pouringImage)
+        [pouringImage, stackView].forEach {
+            contentView.addSubview($0)
+        }
+        stackView.addArrangedSubview(pouringName)
     }
     
     func configureLayout() {
@@ -35,10 +39,27 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
             $0.top.horizontalEdges.equalToSuperview()
             $0.height.equalTo(self.frame.width)
         }
+        
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(pouringImage.snp.bottom).offset(4)
+            $0.centerX.equalToSuperview()
+            $0.width.lessThanOrEqualTo(self.frame.width)
+        }
+
+        stackView.alignment = .center
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
     }
     
     func configureView() {
-        backgroundColor = .white
+        backgroundColor = .clear
+        
+        pouringName.text = "헤실헤실 푸링이"
+    }
+    
+    func configureCell() {
+
+        stackView.cornerRadius()
     }
     
     @available(*, unavailable)

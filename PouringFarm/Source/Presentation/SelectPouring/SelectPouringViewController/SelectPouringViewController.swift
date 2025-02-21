@@ -33,6 +33,9 @@ extension SelectPouringViewController: UICollectionViewDelegate, UICollectionVie
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPouringCollectionViewCell.id, for: indexPath) as? SelectPouringCollectionViewCell else { return UICollectionViewCell() }
         
+        cell.configureCell()
+        cell.layoutIfNeeded()
+        
         return cell
     }
 }

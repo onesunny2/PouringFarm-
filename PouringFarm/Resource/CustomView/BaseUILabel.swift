@@ -10,7 +10,7 @@ import SnapKit
 
 final class BaseUILabel: UILabel {
 
-    init(size: CGFloat = 15, weight: UIFont.Weight = .semibold, line: Int = 1) {
+    init(size: CGFloat = 13, weight: UIFont.Weight = .semibold, line: Int = 1) {
         super.init(frame: .zero)
         
         self.textColor = .prMain
