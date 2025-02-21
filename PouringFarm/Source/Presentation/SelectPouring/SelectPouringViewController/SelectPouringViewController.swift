@@ -41,7 +41,8 @@ extension SelectPouringViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let vc = SelectPopUpViewController()
+        let selectPopupView = SelectPopUpView(.반짝푸링, 3)
+        let vc = SelectPopUpViewController(selectPopupView)
         
         definesPresentationContext = true
         vc.modalPresentationStyle = .overCurrentContext

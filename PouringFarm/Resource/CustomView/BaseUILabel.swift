@@ -10,7 +10,7 @@ import SnapKit
 
 final class BaseUILabel: UILabel {
 
-    init(size: CGFloat = 13, weight: UIFont.Weight = .semibold, line: Int = 1) {
+    init(size: CGFloat = 13, weight: UIFont.Weight = .bold, line: Int = 1) {
         super.init(frame: .zero)
         
         self.textColor = .prMain
@@ -18,7 +18,6 @@ final class BaseUILabel: UILabel {
         self.textAlignment = .center
         self.numberOfLines = line
     }
- 
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {

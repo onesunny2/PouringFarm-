@@ -60,7 +60,7 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
     
     func configureCell() {
 
-        stackView.cornerRadius()
+        stackView.strokeCornerRadius()
     }
     
     @available(*, unavailable)

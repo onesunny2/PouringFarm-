@@ -1,5 +1,5 @@
 //
-//  BaseUIView.swift
+//  UIView+Extension.swift
 //  PouringFarm
 //
 //  Created by Lee Wonsun on 2/21/25.
@@ -7,11 +7,9 @@
 
 import UIKit
 
-final class BaseUIView: UIView {
+extension UIView {
     
-    init(_ radius: CGFloat = 5) {
-        super.init(frame: .zero)
-        
+    func strokeCornerRadius(_ radius: CGFloat = 5) {
         backgroundColor = .prBackground
         layer.cornerRadius = radius
         layer.borderColor = UIColor.prMain.cgColor
@@ -20,8 +18,10 @@ final class BaseUIView: UIView {
         clipsToBounds = true
     }
     
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func basicCornerRadius(_ radius: CGFloat = 5) {
+        backgroundColor = .prBackground
+        layer.cornerRadius = radius
+        
+        clipsToBounds = true
     }
 }
