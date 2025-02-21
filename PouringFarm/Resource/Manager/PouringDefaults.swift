@@ -6,12 +6,19 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 @propertyWrapper
 struct PouringDefaults<T> {
     
     let key: SavingInfo
     let empty: T
+    
+    init(key: SavingInfo, empty: T) {
+        self.key = key
+        self.empty = empty
+    }
     
     var wrappedValue: T {
         get {
@@ -22,10 +29,14 @@ struct PouringDefaults<T> {
         }
     }
     
-    init(key: SavingInfo, empty: T) {
-        self.key = key
-        self.empty = empty
+    var projectedValue: Observable<T> {
+        return UserDefaults.standard.rx.observe(
+            T.self,
+            key.rawValue
+        )
+        .map { $0 ?? empty }
     }
+
 }
 
 // 외부에서 호출해서 사용 할 푸링디폴트의 key 값들
