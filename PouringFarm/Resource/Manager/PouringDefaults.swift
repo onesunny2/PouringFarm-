@@ -29,12 +29,11 @@ struct PouringDefaults<T> {
         }
     }
     
-    var projectedValue: Observable<T> {
+    var projectedValue: Observable<T?> {
         return UserDefaults.standard.rx.observe(
             T.self,
             key.rawValue
         )
-        .map { $0 ?? empty }
     }
 
 }

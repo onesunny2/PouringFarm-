@@ -57,7 +57,7 @@ final class HomeViewController: UIViewController {
         
         button.rx.tap
             .bind { _ in
-                daejang = "zzamong"
+                daejang = "찐찐막"
             }.disposed(by: disposeBag)
         
         $daejang
