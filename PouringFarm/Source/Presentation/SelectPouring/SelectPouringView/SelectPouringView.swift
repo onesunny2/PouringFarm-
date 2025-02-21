@@ -24,13 +24,7 @@ final class SelectPouringView: UIView, BaseView {
         configureLayout()
         configureView()
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-//        selectConllectionView.collectionViewLayout = collectionviewFlowLayout()
-    }
-
+ 
     func configureHierarchy() {
         self.addSubview(selectConllectionView)
     }
@@ -44,7 +38,7 @@ final class SelectPouringView: UIView, BaseView {
     
     func configureView() {
         backgroundColor = .prBackground
-        selectConllectionView.backgroundColor = .prMain
+        selectConllectionView.backgroundColor = .clear
         
         selectConllectionView.register(SelectPouringCollectionViewCell.self, forCellWithReuseIdentifier: SelectPouringCollectionViewCell.id)
     }
