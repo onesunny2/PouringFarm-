@@ -15,7 +15,7 @@ enum SymbolImage {
     case 푸링이변경
     case 초기화
     
-    var imgName: UIImage {
+    var img: UIImage {
         switch self {
         case .프로필: return UIImage(systemName: "person.crop.circle") ?? UIImage()
         case .밥: return UIImage(systemName: "leaf.circle") ?? UIImage()

@@ -14,8 +14,7 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let barbuttonImage = UIImage(systemName: "person.crop.circle")
-    private lazy var rightBarButton = UIBarButtonItem(image: barbuttonImage, style: .done, target: nil, action: nil)
+    private let rightBarButton = UIBarButtonItem(image: SymbolImage.프로필.img)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +27,11 @@ final class HomeViewController: UIViewController {
     
     func bindData() {
  
+        rightBarButton.rx.tap
+            .bind(with: self) { owner, _ in
+                print(#function)
+            }
+            .disposed(by: disposeBag)
     }
 
 }
@@ -39,6 +43,5 @@ extension HomeViewController {
         
         navigationController?.navigationBar.tintColor = .prNavi
         navigationItem.rightBarButtonItem = rightBarButton
-        
     }
 }
