@@ -54,8 +54,6 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
     
     func configureView() {
         backgroundColor = .clear
-        
-        pouringName.text = "헤실헤실 푸링이"
     }
     
     func configureCell(_ name: String, _ image: String) {

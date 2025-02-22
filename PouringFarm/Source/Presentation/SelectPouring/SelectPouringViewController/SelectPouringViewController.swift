@@ -28,7 +28,10 @@ final class SelectPouringViewController: UIViewController {
     
     private func bind() {
         
-        let input = SelectPouringViewModel.Input()
+        let input = SelectPouringViewModel.Input(
+            tappedCollectionCell: mainView.selectConllectionView.rx.itemSelected,
+            selectedCellData: mainView.selectConllectionView.rx.modelSelected(PouringInfo.self)
+        )
         let output = viewModel.transform(input: input)
         
         viewModel.pouringInfo
@@ -38,27 +41,21 @@ final class SelectPouringViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        Observable.zip(mainView.selectConllectionView.rx.itemSelected, mainView.selectConllectionView.rx.modelSelected((type: PouringName, name: String, image: String).self))
-            .map { $0.1 }
-            .bind(with: self) { owner, pouring in
-                
-                let view = SelectPopUpView(pouring.type, 10)
+        output.selectedPouring
+            .bind(with: self) { owner, value in
+                let view = SelectPopUpView(value.type, 10)
                 let vc = SelectPopUpViewController(view)
-                
-                owner.definesPresentationContext = true
-                vc.modalPresentationStyle = .overCurrentContext
-                
-                owner.present(vc, animated: true)
+                owner.viewTransition(type: .overCurrentContext, vc: vc)
             }
             .disposed(by: disposeBag)
     }
 
 }
 
-// 기본셋팅
 extension SelectPouringViewController {
-    
+
     private func basicSetting() {
         navigationItem.title = NavigationTitle.캐릭터선택화면.text
+        definesPresentationContext = true // overCurrentContext 사용을 위해
     }
 }
