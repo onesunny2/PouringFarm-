@@ -39,12 +39,19 @@ final class SelectPopUpViewModel: BaseViewModel {
         
         input.tappedStartButton
             .bind(with: self) { owner, _ in
-                print(#function)
+                
                 owner.savePouring = owner.selectedPouring.rawValue
+                
+                guard owner.savePouring != PouringName.준비중.rawValue else {
+                    print("준비중입니다~")
+                    return
+                }
+                
                 owner.selectFirstPouring = true
             }
             .disposed(by: disposeBag)
         
+        // TODO: (질문) Output이 없는 경우 transform의 의미
         return Output()
     }
 }
