@@ -13,7 +13,7 @@ final class SelectPouringViewController: UIViewController {
     
     private let mainView = SelectPouringView()
     private let viewModel = SelectPouringViewModel()
-    
+
     override func loadView() {
         view = mainView
     }
@@ -30,6 +30,8 @@ final class SelectPouringViewController: UIViewController {
         let input = SelectPouringViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        
+        
     }
 
 }
@@ -37,22 +39,24 @@ final class SelectPouringViewController: UIViewController {
 // collectionview 설정
 extension SelectPouringViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 24
+        return PouringName.pouringsList().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        let pouringInfo = PouringName.pouringsList()[indexPath.item]
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPouringCollectionViewCell.id, for: indexPath) as? SelectPouringCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configureCell()
-        cell.layoutIfNeeded()
+        cell.configureCell(pouringInfo.name, pouringInfo.image)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let selectPopupView = SelectPopUpView(.반짝푸링, 3)
+        let pouringInfo = PouringName.pouringsList()[indexPath.item]
+        let selectPopupView = SelectPopUpView(pouringInfo.type, 10)
         let vc = SelectPopUpViewController(selectPopupView)
         
         definesPresentationContext = true

@@ -7,21 +7,26 @@
 
 import Foundation
 
-enum PouringName: String {
+enum PouringName: String, CaseIterable {
     case 따끔푸링 = "따끔따끔 푸링이"
-    case 헤실푸링 = "방실방실 푸링이"
+    case 헤실푸링 = "헤실헤실 푸링이"
     case 반짝푸링 = "반짝반짝 푸링이"
     case 준비중 = "준비중이에요"
-    
-    // TODO: 더 효율적으로 작성하는 법
-    static let selectImgList: [String] =
-        [PouringName.따끔푸링.imageName(10), PouringName.헤실푸링.imageName(10), PouringName.반짝푸링.imageName(10)] + Array(repeating: PouringName.준비중.imageName(), count: 27)
-    
+
+    // 푸링이 자기소개
     var introduction: String {
         
         switch self {
         default: return pouringIntro[self] ?? self.rawValue
         }
+    }
+    
+    static func pouringsList() -> [(type: PouringName, name: String, image: String)] {
+
+        let pourings = PouringName.allCases + Array(repeating: PouringName.준비중, count: 26)
+        let list = pourings.map { ($0, $0.rawValue, $0.imageName(10)) }
+        
+        return list
     }
     
     // 현재 레벨에 따른 이미지명
