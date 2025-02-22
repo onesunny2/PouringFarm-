@@ -51,7 +51,7 @@ print("팝업창 뜸")
             .disposed(by: disposeBag)
         
         // TODO: (질문) 한번 더 가공을 하느냐, projectedValue의 목적에 따라 쓰느냐
-        viewModel.$selectFirstPouring
+        SavingInfo.$isSelectFirst
             .bind(with: self) { owner, value in
                 guard let value, value else {
                     print("저장된 선택유무 false")
