@@ -14,68 +14,31 @@ final class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let button: UIButton = {
-        let button = UIButton()
-        button.setTitle("저장", for: .normal)
-        button.backgroundColor = .clear
-        button.setTitleColor(.prMain, for: .normal)
-    
-        return button
-    }()
-    
-    private let saveName: UILabel = {
-        let name = UILabel()
-//        name.text = "daejang"
-        name.font = .systemFont(ofSize: 15, weight: .medium)
-        
-        return name
-    }()
+    private let barbuttonImage = UIImage(systemName: "person.crop.circle")
+    private lazy var rightBarButton = UIBarButtonItem(image: barbuttonImage, style: .done, target: nil, action: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        @PouringDefaults(key: .푸링이종류, empty: PouringName.준비중.rawValue) var savePouring
-        
-        @PouringDefaults(key: .최초_푸링이_선택유무, empty: false) var isSelected
-        
-        print("==저장된 푸링이==", savePouring)
-        print("==푸링이 선택함?==", isSelected)
 
         view.backgroundColor = .prBackground
         
-        view.addSubview(button)
-        view.addSubview(saveName)
-        
+        basicSetting()
         bindData()
-        
-        button.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
-            make.size.equalTo(150)
-        }
-        
-        saveName.snp.makeConstraints { make in
-            make.top.equalTo(button.snp.bottom).offset(20)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-//        saveName.text = "daejang"
     }
     
     func bindData() {
-        @PouringDefaults(key: .대장이름, empty: "대장님") var daejang
-        print("wrapped", daejang)
-        print("projected", $daejang)
-        
-//        saveName.text = "daejang"
-        
-        button.rx.tap
-            .bind { _ in
-                daejang = "김기영구"
-            }.disposed(by: disposeBag)
-        
-        $daejang
-            .bind(to: saveName.rx.text)
-            .disposed(by: disposeBag)
+ 
     }
 
+}
+
+extension HomeViewController {
+    private func basicSetting() {
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.prNavi]
+        navigationItem.title = NavigationTitle.홈화면(daejang: SavingInfo.daejang).text
+        
+        navigationController?.navigationBar.tintColor = .prNavi
+        navigationItem.rightBarButtonItem = rightBarButton
+        
+    }
 }
