@@ -32,6 +32,13 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        @PouringDefaults(key: .푸링이종류, empty: PouringName.준비중.rawValue) var savePouring
+        
+        @PouringDefaults(key: .최초_푸링이_선택유무, empty: false) var isSelected
+        
+        print("==저장된 푸링이==", savePouring)
+        print("==푸링이 선택함?==", isSelected)
 
         view.backgroundColor = .prBackground
         
@@ -52,12 +59,10 @@ final class HomeViewController: UIViewController {
     
     func bindData() {
         @PouringDefaults(key: .대장이름, empty: "아직없음") var daejang
-        print(daejang)
-        print($daejang)
         
         button.rx.tap
             .bind { _ in
-                daejang = "찐찐막"
+                daejang = "김기영구"
             }.disposed(by: disposeBag)
         
         $daejang

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SelectPopUpView: UIView, BaseView {
+final class SelectPopUpView: UIView, BaseView {
 
     private let mainPopupView = UIView()
     let pouringImage: BaseUIImageView

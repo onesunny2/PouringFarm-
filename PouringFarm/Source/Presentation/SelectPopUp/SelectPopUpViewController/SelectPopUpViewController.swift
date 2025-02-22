@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class SelectPopUpViewController: UIViewController {
     
     private var mainView: SelectPopUpView
-
-    @PouringDefaults(key: .푸링이종류, empty: PouringName.헤실푸링.rawValue) var savedPouring
+    private let viewModel: SelectPopUpViewModel
     
-    init(_ popupView: SelectPopUpView) {
+    private let disposeBag = DisposeBag()
+
+    init(_ popupView: SelectPopUpView, _ popupViewModel: SelectPopUpViewModel) {
         mainView = popupView
+        viewModel = popupViewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -25,25 +29,39 @@ final class SelectPopUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(savedPouring)
-        
-        AddTargets()
+
+        bind()
+    }
+ 
+    deinit {
+        print("선택팝업창 VC Deinit")
     }
     
-    private func AddTargets() {
-        mainView.cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
-        mainView.startButton.addTarget(self, action: #selector(tappedStartButton), for: .touchUpInside)
-    }
-    
-    @objc private func tappedCancelButton() {
-        dismiss(animated: true)
-    }
-    
-    @objc private func tappedStartButton() {
-        print(#function)
+    private func bind() {
         
-        savedPouring = PouringName.반짝푸링.rawValue // TODO: 전달받는 값 이름으로 변경 필요
+        let input = SelectPopUpViewModel.Input(
+            tappedStartButton: mainView.startButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
+        mainView.cancelButton.rx.tap
+            .bind(with: self) { owner, _ in
+                print("cancelButton", #function)
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        // TODO: (질문) 한번 더 가공을 하느냐, projectedValue의 목적에 따라 쓰느냐
+        viewModel.$selectFirstPouring
+            .bind(with: self) { owner, value in
+                guard value != nil else {
+                    print("저장된 선택유무 false")
+                    return
+                }
+                
+                owner.viewTransition(type: .changeRootVC, vc: HomeViewController())
+            }
+            .disposed(by: disposeBag)
     }
     
     @available(*, unavailable)
