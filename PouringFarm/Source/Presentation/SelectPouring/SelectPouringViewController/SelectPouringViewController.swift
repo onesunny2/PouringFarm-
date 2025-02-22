@@ -44,7 +44,9 @@ final class SelectPouringViewController: UIViewController {
         output.selectedPouring
             .bind(with: self) { owner, value in
                 let view = SelectPopUpView(value.type, 10)
-                let vc = SelectPopUpViewController(view)
+                let viewModel = SelectPopUpViewModel(value.type)
+                let vc = SelectPopUpViewController(view, viewModel)
+                
                 owner.viewTransition(type: .overCurrentContext, vc: vc)
             }
             .disposed(by: disposeBag)
