@@ -25,6 +25,7 @@ final class HomeViewController: UIViewController {
     
     private let saveName: UILabel = {
         let name = UILabel()
+//        name.text = "daejang"
         name.font = .systemFont(ofSize: 15, weight: .medium)
         
         return name
@@ -44,6 +45,9 @@ final class HomeViewController: UIViewController {
         
         view.addSubview(button)
         view.addSubview(saveName)
+        
+        bindData()
+        
         button.snp.makeConstraints { make in
             make.center.equalTo(view.safeAreaLayoutGuide)
             make.size.equalTo(150)
@@ -54,11 +58,15 @@ final class HomeViewController: UIViewController {
             make.centerX.equalTo(view.safeAreaLayoutGuide)
         }
         
-        bindData()
+//        saveName.text = "daejang"
     }
     
     func bindData() {
-        @PouringDefaults(key: .대장이름, empty: "아직없음") var daejang
+        @PouringDefaults(key: .대장이름, empty: "대장님") var daejang
+        print("wrapped", daejang)
+        print("projected", $daejang)
+        
+//        saveName.text = "daejang"
         
         button.rx.tap
             .bind { _ in
