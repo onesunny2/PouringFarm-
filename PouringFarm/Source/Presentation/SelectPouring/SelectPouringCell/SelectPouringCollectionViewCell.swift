@@ -54,13 +54,14 @@ final class SelectPouringCollectionViewCell: UICollectionViewCell, BaseCell {
     
     func configureView() {
         backgroundColor = .clear
-        
-        pouringName.text = "헤실헤실 푸링이"
     }
     
-    func configureCell() {
-
+    func configureCell(_ name: String, _ image: String) {
+        pouringName.text = name
+        pouringImage.image = UIImage(named: image)
         stackView.strokeCornerRadius()
+        
+        self.layoutIfNeeded()
     }
     
     @available(*, unavailable)

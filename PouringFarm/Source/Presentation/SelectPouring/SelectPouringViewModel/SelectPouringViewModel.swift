@@ -11,14 +11,16 @@ import RxSwift
 
 final class SelectPouringViewModel: BaseViewModel {
     
+    let pouringInfo = Observable.just(PouringName.pouringsList(total: 30)) 
     var disposeBag: DisposeBag = DisposeBag()
     
     struct Input {
-        
+        let tappedCollectionCell: ControlEvent<IndexPath>
+        let selectedCellData: ControlEvent<PouringInfo>
     }
     
     struct Output {
-        
+        let selectedPouring: PublishRelay<PouringInfo>
     }
     
     init() {
@@ -31,6 +33,15 @@ final class SelectPouringViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         
-        return Output()
+        let selectedPouring = PublishRelay<PouringInfo>()
+        
+        Observable.zip(input.tappedCollectionCell, input.selectedCellData)
+            .map { $0.1 }
+            .bind { value in
+                selectedPouring.accept(value)
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(selectedPouring: selectedPouring)
     }
 }

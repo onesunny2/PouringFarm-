@@ -9,5 +9,6 @@ import Foundation
 
 enum ViewTransition {
     case navigation
+    case overCurrentContext
     case changeRootVC
 }

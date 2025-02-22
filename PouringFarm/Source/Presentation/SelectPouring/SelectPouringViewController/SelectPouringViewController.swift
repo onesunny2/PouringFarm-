@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class SelectPouringViewController: UIViewController {
     
     private let mainView = SelectPouringView()
-    
+    private let viewModel = SelectPouringViewModel()
+    private let disposeBag = DisposeBag()
+
     override func loadView() {
         view = mainView
     }
@@ -19,45 +23,38 @@ final class SelectPouringViewController: UIViewController {
         super.viewDidLoad()
 
         basicSetting()
-    }
-
-}
-
-// collectionview 설정
-extension SelectPouringViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 24
+        bind()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    private func bind() {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPouringCollectionViewCell.id, for: indexPath) as? SelectPouringCollectionViewCell else { return UICollectionViewCell() }
+        let input = SelectPouringViewModel.Input(
+            tappedCollectionCell: mainView.selectConllectionView.rx.itemSelected,
+            selectedCellData: mainView.selectConllectionView.rx.modelSelected(PouringInfo.self)
+        )
+        let output = viewModel.transform(input: input)
         
-        cell.configureCell()
-        cell.layoutIfNeeded()
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let selectPopupView = SelectPopUpView(.반짝푸링, 3)
-        let vc = SelectPopUpViewController(selectPopupView)
-        
-        definesPresentationContext = true
-        vc.modalPresentationStyle = .overCurrentContext
-        
-        present(vc, animated: true)
+        viewModel.pouringInfo
+            .bind(to: mainView.selectConllectionView.rx.items(cellIdentifier: SelectPouringCollectionViewCell.id, cellType: SelectPouringCollectionViewCell.self)
+            ) { (row, element, cell) in
+                cell.configureCell(element.name, element.image)
+            }
+            .disposed(by: disposeBag)
+
+        output.selectedPouring
+            .bind(with: self) { owner, value in
+                let view = SelectPopUpView(value.type, 10)
+                let vc = SelectPopUpViewController(view)
+                owner.viewTransition(type: .overCurrentContext, vc: vc)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
-// 기본셋팅
 extension SelectPouringViewController {
-    
+
     private func basicSetting() {
-        mainView.selectConllectionView.delegate = self
-        mainView.selectConllectionView.dataSource = self
-        
         navigationItem.title = NavigationTitle.캐릭터선택화면.text
+        definesPresentationContext = true // overCurrentContext 사용을 위해
     }
 }

@@ -14,6 +14,9 @@ extension UIViewController {
         switch type {
         case .navigation:
             navigationController?.pushViewController(vc, animated: true)
+        case .overCurrentContext:
+            vc.modalPresentationStyle = .overCurrentContext
+            present(vc, animated: true)
         case .changeRootVC:
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first else { return }
             
