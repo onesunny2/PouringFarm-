@@ -11,6 +11,7 @@ import RxSwift
 
 final class SelectPouringViewModel: BaseViewModel {
     
+    let pouringInfo = Observable.just(PouringName.pouringsList()) 
     var disposeBag: DisposeBag = DisposeBag()
     
     struct Input {

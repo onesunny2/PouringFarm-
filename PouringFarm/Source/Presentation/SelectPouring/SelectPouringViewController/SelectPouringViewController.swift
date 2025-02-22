@@ -13,6 +13,7 @@ final class SelectPouringViewController: UIViewController {
     
     private let mainView = SelectPouringView()
     private let viewModel = SelectPouringViewModel()
+    private let disposeBag = DisposeBag()
 
     override func loadView() {
         view = mainView
@@ -30,49 +31,34 @@ final class SelectPouringViewController: UIViewController {
         let input = SelectPouringViewModel.Input()
         let output = viewModel.transform(input: input)
         
-        
-        
+        viewModel.pouringInfo
+            .bind(to: mainView.selectConllectionView.rx.items(cellIdentifier: SelectPouringCollectionViewCell.id, cellType: SelectPouringCollectionViewCell.self)
+            ) { (row, element, cell) in
+                cell.configureCell(element.name, element.image)
+            }
+            .disposed(by: disposeBag)
+
+        Observable.zip(mainView.selectConllectionView.rx.itemSelected, mainView.selectConllectionView.rx.modelSelected((type: PouringName, name: String, image: String).self))
+            .map { $0.1 }
+            .bind(with: self) { owner, pouring in
+                
+                let view = SelectPopUpView(pouring.type, 10)
+                let vc = SelectPopUpViewController(view)
+                
+                owner.definesPresentationContext = true
+                vc.modalPresentationStyle = .overCurrentContext
+                
+                owner.present(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
-}
-
-// collectionview 설정
-extension SelectPouringViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PouringName.pouringsList().count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let pouringInfo = PouringName.pouringsList()[indexPath.item]
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectPouringCollectionViewCell.id, for: indexPath) as? SelectPouringCollectionViewCell else { return UICollectionViewCell() }
-        
-        cell.configureCell(pouringInfo.name, pouringInfo.image)
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let pouringInfo = PouringName.pouringsList()[indexPath.item]
-        let selectPopupView = SelectPopUpView(pouringInfo.type, 10)
-        let vc = SelectPopUpViewController(selectPopupView)
-        
-        definesPresentationContext = true
-        vc.modalPresentationStyle = .overCurrentContext
-        
-        present(vc, animated: true)
-    }
 }
 
 // 기본셋팅
 extension SelectPouringViewController {
     
     private func basicSetting() {
-        mainView.selectConllectionView.delegate = self
-        mainView.selectConllectionView.dataSource = self
-        
         navigationItem.title = NavigationTitle.캐릭터선택화면.text
     }
 }
