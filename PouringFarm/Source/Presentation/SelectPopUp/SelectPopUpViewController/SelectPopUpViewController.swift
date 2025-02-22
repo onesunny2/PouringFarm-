@@ -32,6 +32,10 @@ final class SelectPopUpViewController: UIViewController {
 
         bind()
     }
+ 
+    deinit {
+        print("선택팝업창 VC Deinit")
+    }
     
     private func bind() {
         
@@ -42,16 +46,19 @@ final class SelectPopUpViewController: UIViewController {
         
         mainView.cancelButton.rx.tap
             .bind(with: self) { owner, _ in
+                print("cancelButton", #function)
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
         
-        output.isSelectedFirst
+        // TODO: (질문) 한번 더 가공을 하느냐, projectedValue의 목적에 따라 쓰느냐
+        viewModel.$selectFirstPouring
             .bind(with: self) { owner, value in
-                guard value else {
-                    print("화면선택유무 오류")
+                guard value != nil else {
+                    print("저장된 선택유무 false")
                     return
                 }
+                
                 owner.viewTransition(type: .changeRootVC, vc: HomeViewController())
             }
             .disposed(by: disposeBag)

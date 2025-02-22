@@ -26,6 +26,10 @@ final class SelectPouringViewController: UIViewController {
         bind()
     }
     
+    deinit {
+        print("푸링선택화면 VC Deinit")
+    }
+    
     private func bind() {
         
         let input = SelectPouringViewModel.Input(

@@ -22,8 +22,7 @@ final class SelectPopUpViewModel: BaseViewModel {
     }
     
     struct Output {
-        // 첫 캐릭터 선택 유무 -> 저장되면 화면 전환되도록 해야 함
-        let isSelectedFirst: PublishRelay<Bool>
+
     }
     
     init(_ selectedPouring: PouringName) {
@@ -38,16 +37,14 @@ final class SelectPopUpViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         
-        let isSelected = PublishRelay<Bool>()
-        
         input.tappedStartButton
             .bind(with: self) { owner, _ in
+                print(#function)
                 owner.savePouring = owner.selectedPouring.rawValue
                 owner.selectFirstPouring = true
-                isSelected.accept(owner.selectFirstPouring)
             }
-            .disposed(by: DisposeBag())
+            .disposed(by: disposeBag)
         
-        return Output(isSelectedFirst: isSelected)
+        return Output()
     }
 }
