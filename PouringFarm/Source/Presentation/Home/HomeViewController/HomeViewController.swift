@@ -47,8 +47,38 @@ final class HomeViewController: UIViewController {
         mainView.babButton.rx.tap
             .bind(with: self) { owner, _ in
                 LevelManager.shared.getBabCount(owner.mainView.babTextfield.text ?? "")
+                LevelManager.shared.caculateLevel()
+                
+                owner.mainView.babTextfield.text = ""
             }
             .disposed(by: disposeBag)
+        
+        mainView.waterButton.rx.tap
+            .bind(with: self) { owner, _ in
+                LevelManager.shared.getWaterCount(owner.mainView.waterTextfield.text ?? "")
+                LevelManager.shared.caculateLevel()
+                
+                owner.mainView.waterTextfield.text = ""
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            SavingInfo.$currentLevel,
+            SavingInfo.$currentBab,
+            SavingInfo.$currentWater,
+            SavingInfo.$currentPouring
+        )
+        .bind(with: self) { owner, value in
+            
+            guard let lv = value.0, let bab = value.1, let water = value.2, let selectedPouring = value.3 else { return }
+            
+            owner.mainView.statusLabel.text = LevelManager.shared.currentStatusLabel(lv, bab, water)
+
+            owner.mainView.pouringImage.image = UIImage(named: selectedPouring.imageName(lv))
+            
+            owner.mainView.pouringName.text = selectedPouring.rawValue
+        }
+        .disposed(by: disposeBag)
     }
 
 }

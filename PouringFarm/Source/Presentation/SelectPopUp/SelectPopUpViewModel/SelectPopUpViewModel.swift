@@ -13,9 +13,6 @@ final class SelectPopUpViewModel: BaseViewModel {
     
     var disposeBag: DisposeBag = DisposeBag()
     let selectedPouring: PouringName
-    
-//    @PouringDefaults(key: .푸링이종류, empty: PouringName.헤실푸링.rawValue) var savePouring
-//    @PouringDefaults(key: .최초_푸링이_선택유무, empty: false) var selectFirstPouring
 
     struct Input {
         let tappedStartButton: ControlEvent<Void>
@@ -40,9 +37,9 @@ final class SelectPopUpViewModel: BaseViewModel {
         input.tappedStartButton
             .bind(with: self) { owner, _ in
                 
-                SavingInfo.currentPouring = owner.selectedPouring.rawValue
+                SavingInfo.currentPouring = owner.selectedPouring
                 
-                guard SavingInfo.currentPouring != PouringName.준비중.rawValue else {
+                guard SavingInfo.currentPouring != PouringName.준비중 else {
                     print("준비중입니다~")
                     return
                 }

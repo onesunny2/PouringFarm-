@@ -59,4 +59,13 @@ final class LevelManager {
         default: SavingInfo.currentLevel = result
         }
     }
+    
+    // 현재 상태 label
+    func currentStatusLabel(_ level: Int, _ bab: Int, _ water: Int) -> String {
+        let statusArray = ["LV\(level)", "밥알 \(bab)개", "물방울 \(water)개"]
+        
+        let status = statusArray.joined(separator: " • ")
+        
+        return status
+    }
 }
