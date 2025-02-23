@@ -101,6 +101,7 @@ extension HomeViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.prNavi]
         
         navigationController?.navigationBar.tintColor = .prNavi
+        navigationItem.backButtonTitle = ""
         navigationItem.rightBarButtonItem = rightBarButton
     }
 }

@@ -13,6 +13,15 @@ final class SettingViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .prBackground
+        basicSetting()
     }
  
+}
+
+extension SettingViewController {
+    private func basicSetting() {
+        navigationItem.title = NavigationTitle.설정화면.text
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.prNavi]
+        navigationController?.navigationBar.tintColor = .prNavi
+    }
 }
