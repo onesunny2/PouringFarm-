@@ -10,7 +10,7 @@ import SnapKit
 
 final class SettingView: UIView, BaseView {
     
-    private let tableView = UITableView(frame: .zero)
+    let tableView = UITableView(frame: .zero, style: .plain)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +31,8 @@ final class SettingView: UIView, BaseView {
     }
     
     func configureView() {
+        backgroundColor = .prBackground
+        tableView.backgroundColor = .prBackground
         tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.id)
     }
 
