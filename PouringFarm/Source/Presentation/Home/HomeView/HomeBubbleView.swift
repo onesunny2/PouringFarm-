@@ -46,7 +46,7 @@ final class HomeBubbleView: UIView, BaseView {
     }
     
     func configureView() {
-        commentLabel.text = "가나다라마바사가나다라마바사가나다라마바사가나다라마바사"
+        commentLabel.text = PouringName.pouringComment()
     }
     
     @available(*, unavailable)

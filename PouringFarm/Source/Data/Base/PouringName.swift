@@ -15,7 +15,6 @@ enum PouringName: String, CaseIterable {
 
     // 푸링이 자기소개
     var introduction: String {
-        
         switch self {
         default: return pouringIntro[self] ?? self.rawValue
         }
@@ -44,6 +43,10 @@ enum PouringName: String, CaseIterable {
         case .준비중: return "noImage"
         }
     }
+    
+    static func pouringComment() -> String {
+        return randomComment.randomElement() ?? ""
+    }
 }
 
 private let pouringIntro: [PouringName: String] = [
@@ -53,6 +56,7 @@ private let pouringIntro: [PouringName: String] = [
     PouringName.준비중: "새로운 푸링이가 준비중입니다!\n빠른 시일내로 찾아올테니 다른 푸링이를 선택해주세요!"
 ]
 
-//private let pouringComment: [String] = [
-//    String(format: <#T##String#>, SavingInfo.daejang)
-//]
+private let randomComment: [String] = [
+    String(format: "%@님, 오늘도 좋은 하루 되세요!", SavingInfo.daejang),
+    String(format: "지금 너무 배고파요, %@님 ㅠㅠ 밥 주세요!", SavingInfo.daejang)
+]
