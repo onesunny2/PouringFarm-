@@ -24,4 +24,19 @@ extension UIViewController {
             window.makeKeyAndVisible()
         }
     }
+    
+    func alert(title: String, message: String, resetAction: @escaping () -> ()) {
+        
+        let message = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "응", style: .default) { _ in
+            resetAction()
+        }
+        let cancel = UIAlertAction(title: "아니!", style: .default)
+        
+        message.addAction(cancel)
+        message.addAction(ok)
+        
+        present(message, animated: true)
+    }
 }
