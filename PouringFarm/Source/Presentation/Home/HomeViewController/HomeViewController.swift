@@ -12,10 +12,15 @@ import SnapKit
 
 final class HomeViewController: UIViewController {
     
+    private let mainView = HomeView()
     private let disposeBag = DisposeBag()
     
     private let rightBarButton = UIBarButtonItem(image: SymbolImage.프로필.img)
 
+    override func loadView() {
+        view = mainView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +28,12 @@ final class HomeViewController: UIViewController {
         
         basicSetting()
         bindData()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+        view.endEditing(true)
     }
     
     func bindData() {

@@ -52,3 +52,7 @@ private let pouringIntro: [PouringName: String] = [
     PouringName.반짝푸링: "나는야 꾸미기를 좋아하는 스타 슬라임~ 반짝반짝 푸링이야!\n주인공이 되고 싶다면 나와 함께해!\n내가 반짝반짝 후광을 비춰줄게!!",
     PouringName.준비중: "새로운 푸링이가 준비중입니다!\n빠른 시일내로 찾아올테니 다른 푸링이를 선택해주세요!"
 ]
+
+//private let pouringComment: [String] = [
+//    String(format: <#T##String#>, SavingInfo.daejang)
+//]
