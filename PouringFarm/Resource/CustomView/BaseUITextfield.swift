@@ -12,8 +12,10 @@ final class BaseUITextfield: UITextField {
     init(placeholder: String, alignment: NSTextAlignment = .center, keyboard: UIKeyboardType = .numberPad) {
         super.init(frame: .zero)
         
-        let placeholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let placeholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15, weight: .semibold)])
         
+        
+        font = .systemFont(ofSize: 15, weight: .semibold)
         textColor = .prMain
         textAlignment = alignment
         keyboardType = keyboard
