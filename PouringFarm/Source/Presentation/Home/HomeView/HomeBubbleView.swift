@@ -11,7 +11,7 @@ import SnapKit
 final class HomeBubbleView: UIView, BaseView {
     
     private let bubbleImage: BaseUIImageView
-    private let commentLabel: BaseUILabel
+    let commentLabel: BaseUILabel
     
     override init(frame: CGRect) {
         

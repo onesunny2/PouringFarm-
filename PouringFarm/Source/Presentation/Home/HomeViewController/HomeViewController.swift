@@ -13,6 +13,7 @@ import SnapKit
 final class HomeViewController: UIViewController {
     
     private let mainView = HomeView()
+    private let viewMocel = HomeViewModel()
     private let disposeBag = DisposeBag()
     
     private let rightBarButton = UIBarButtonItem(image: SymbolImage.프로필.img)
@@ -37,31 +38,43 @@ final class HomeViewController: UIViewController {
     }
     
     func bindData() {
+        
+        let bab = mainView.babButton.rx.tap
+            .withUnretained(self)
+            .map { _ in
+                self.mainView.babTextfield.text
+            }
+        let water = mainView.waterButton.rx.tap
+             .withUnretained(self)
+             .map { _ in
+                 self.mainView.waterTextfield.text
+             }
+        
+        let input = HomeViewModel.Input(
+            babTextfieldNumber: bab,
+            waterTextfieldNumber: water
+        )
+        let output = viewMocel.transform(input: input)
  
         rightBarButton.rx.tap
             .bind(with: self) { owner, _ in
-                print(#function)
+                owner.viewTransition(type: .navigation, vc: SettingViewController())
             }
             .disposed(by: disposeBag)
-        
-        mainView.babButton.rx.tap
-            .bind(with: self) { owner, _ in
-                LevelManager.shared.getBabCount(owner.mainView.babTextfield.text ?? "")
-                LevelManager.shared.caculateLevel()
-                
-                owner.mainView.babTextfield.text = ""
-            }
+
+        output.resetBabText
+            .bind(to: mainView.babTextfield.rx.text)
             .disposed(by: disposeBag)
         
-        mainView.waterButton.rx.tap
-            .bind(with: self) { owner, _ in
-                LevelManager.shared.getWaterCount(owner.mainView.waterTextfield.text ?? "")
-                LevelManager.shared.caculateLevel()
-                
-                owner.mainView.waterTextfield.text = ""
-            }
+        output.resetWaterText
+            .bind(to: mainView.waterTextfield.rx.text)
             .disposed(by: disposeBag)
         
+        output.randomComment
+            .bind(to: mainView.bubbleView.commentLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // MARK: UI 자동 업데이트
         Observable.combineLatest(
             SavingInfo.$currentLevel,
             SavingInfo.$currentBab,
