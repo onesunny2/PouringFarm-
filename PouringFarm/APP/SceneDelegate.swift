@@ -13,13 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        @PouringDefaults(key: .최초_푸링이_선택유무, empty: false) var isSelected
-
+ 
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = UINavigationController(rootViewController: isSelected ?  HomeViewController() : SelectPouringViewController())
+        window?.rootViewController = UINavigationController(rootViewController: SavingInfo.isSelectFirst ?  HomeViewController() : SelectPouringViewController())
         window?.makeKeyAndVisible()
     }
 

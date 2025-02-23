@@ -60,6 +60,7 @@ final class SelectPouringViewController: UIViewController {
 extension SelectPouringViewController {
 
     private func basicSetting() {
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.prNavi]
         navigationItem.title = NavigationTitle.캐릭터선택화면.text
         definesPresentationContext = true // overCurrentContext 사용을 위해
     }
