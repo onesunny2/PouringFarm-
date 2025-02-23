@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .prBackground
-        
+
         basicSetting()
         bindData()
     }
@@ -43,6 +43,42 @@ final class HomeViewController: UIViewController {
                 print(#function)
             }
             .disposed(by: disposeBag)
+        
+        mainView.babButton.rx.tap
+            .bind(with: self) { owner, _ in
+                LevelManager.shared.getBabCount(owner.mainView.babTextfield.text ?? "")
+                LevelManager.shared.caculateLevel()
+                
+                owner.mainView.babTextfield.text = ""
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.waterButton.rx.tap
+            .bind(with: self) { owner, _ in
+                LevelManager.shared.getWaterCount(owner.mainView.waterTextfield.text ?? "")
+                LevelManager.shared.caculateLevel()
+                
+                owner.mainView.waterTextfield.text = ""
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+            SavingInfo.$currentLevel,
+            SavingInfo.$currentBab,
+            SavingInfo.$currentWater,
+            SavingInfo.$currentPouring,
+            SavingInfo.$daejang
+        )
+        .bind(with: self) { owner, value in
+            
+            guard let lv = value.0, let bab = value.1, let water = value.2, let selectedPouring = value.3, let daejang = value.4 else { return }
+            
+            owner.mainView.statusLabel.text = LevelManager.shared.currentStatusLabel(lv, bab, water)
+            owner.mainView.pouringImage.image = UIImage(named: selectedPouring.imageName(lv))
+            owner.mainView.pouringName.text = selectedPouring.rawValue
+            owner.navigationItem.title = NavigationTitle.홈화면(daejang: daejang).text
+        }
+        .disposed(by: disposeBag)
     }
 
 }
@@ -50,7 +86,6 @@ final class HomeViewController: UIViewController {
 extension HomeViewController {
     private func basicSetting() {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.prNavi]
-        navigationItem.title = NavigationTitle.홈화면(daejang: SavingInfo.daejang).text
         
         navigationController?.navigationBar.tintColor = .prNavi
         navigationItem.rightBarButtonItem = rightBarButton
