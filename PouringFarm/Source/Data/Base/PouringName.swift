@@ -57,6 +57,8 @@ private let pouringIntro: [PouringName: String] = [
 ]
 
 private let randomComment: [String] = [
-    String(format: "%@님, 오늘도 좋은 하루 되세요!", SavingInfo.daejang),
-    String(format: "지금 너무 배고파요, %@님 ㅠㅠ 밥 주세요!", SavingInfo.daejang)
+    String(format: "저 달빛에 그려지는 %@님의 미소를 간직해", SavingInfo.daejang),
+    String(format: "그을진 저 노을 속에 %@님 얼굴이 떠올라", SavingInfo.daejang),
+    String(format: "%@님은 밤하늘에 놓인 작은 별 같아요 매일 밤마다 나를 찾아와", SavingInfo.daejang),
+    String(format: "또 찬바람이 불어와 %@님의 맘을 뒤흔들면 포근한 저 바람 되어 안아줄게요", SavingInfo.daejang)
 ]
