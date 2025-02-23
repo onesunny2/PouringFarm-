@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .prBackground
-        
+
         basicSetting()
         bindData()
     }
@@ -41,6 +41,12 @@ final class HomeViewController: UIViewController {
         rightBarButton.rx.tap
             .bind(with: self) { owner, _ in
                 print(#function)
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.babButton.rx.tap
+            .bind(with: self) { owner, _ in
+                LevelManager.shared.getBabCount(owner.mainView.babTextfield.text ?? "")
             }
             .disposed(by: disposeBag)
     }
