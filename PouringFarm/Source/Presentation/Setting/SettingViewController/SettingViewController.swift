@@ -8,6 +8,12 @@
 import UIKit
 
 final class SettingViewController: UIViewController {
+    
+    private let mainView = SettingView()
+    
+    override func loadView() {
+        view = mainView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
