@@ -59,12 +59,19 @@ final class SettingViewController: UIViewController {
             ) { (row, element, cell) in
                 cell.textLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
                 cell.textLabel?.text = element.title
-                cell.detailTextLabel?.text = element.detail
                 cell.imageView?.image = element.image
                 cell.tintColor = .prNavi
                 cell.accessoryType = .disclosureIndicator
                 cell.backgroundColor = .clear
                 cell.separatorInset.left = .zero
+                
+                guard row == 0 else { return }
+                SavingInfo.$daejang
+                    .bind(with: self) { owner, name in
+                        guard let name else { return }
+                        cell.detailTextLabel?.text = name
+                    }
+                    .disposed(by: self.disposeBag)
             }
             .disposed(by: disposeBag)
     }
