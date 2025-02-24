@@ -12,7 +12,7 @@ import RxSwift
 final class SelectPouringViewController: UIViewController {
     
     private let mainView = SelectPouringView()
-    private let viewModel = SelectPouringViewModel()
+    let viewModel = SelectPouringViewModel()
     private let disposeBag = DisposeBag()
 
     override func loadView() {
@@ -47,6 +47,7 @@ final class SelectPouringViewController: UIViewController {
 
         output.selectedPouring
             .bind(with: self) { owner, value in
+                
                 let view = SelectPopUpView(value.type, 10)
                 let viewModel = SelectPopUpViewModel(value.type)
                 let vc = SelectPopUpViewController(view, viewModel)

@@ -27,7 +27,7 @@ enum PouringName: String, CaseIterable {
             PouringInfo(
                 type: $0,
                 name: $0.rawValue,
-                image: $0.imageName(10)
+                image: PouringName.imageName($0.rawValue, 10)
             )
         }
         
@@ -35,12 +35,14 @@ enum PouringName: String, CaseIterable {
     }
     
     // 현재 레벨에 따른 이미지명
-    func imageName(_ level: Int = 1) -> String {
-        switch self {
-        case .따끔푸링: return "1-\(level)"
-        case .헤실푸링: return "2-\(level)"
-        case .반짝푸링: return "3-\(level)"
-        case .준비중: return "noImage"
+    static func imageName(_ type: String, _ level: Int = 1) -> String {
+        switch type {
+        case PouringName.따끔푸링.rawValue: return "1-\(level)"
+        case PouringName.헤실푸링.rawValue: return "2-\(level)"
+        case PouringName.반짝푸링.rawValue: return "3-\(level)"
+        case PouringName.준비중.rawValue: return "noImage"
+        default:
+            return "error"
         }
     }
     

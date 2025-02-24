@@ -14,7 +14,7 @@ final class SettingViewController: UIViewController {
     private let mainView = SettingView()
     private let disposeBag = DisposeBag()
  
-    lazy var tableview = Observable.just(settings)
+    lazy var tableviewItems = Observable.just(settings)
     
     override func loadView() {
         view = mainView
@@ -29,7 +29,30 @@ final class SettingViewController: UIViewController {
     
     private func bind() {
         
-        tableview
+        mainView.tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                
+                switch indexPath.row {
+                case 0:
+                    let vc = ChangeNameViewController()
+                    owner.viewTransition(type: .navigation, vc: vc)
+                case 1:
+                    let vc = SelectPouringViewController()
+                    owner.viewTransition(type: .navigation, vc: vc)
+                case 2:
+                    let title = "데이터 초기화"
+                    let message = "정말 다시 처음부터 시작하시겠어요?"
+                    owner.alert(title: title, message: message) {
+                        SavingInfo.reset()
+                        owner.viewTransition(type: .changeRootVC, vc: SelectPouringViewController())
+                    }
+                default:
+                    break
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        tableviewItems
             .bind(to: mainView.tableView.rx.items(
                 cellIdentifier: SettingTableViewCell.id,
                 cellType: SettingTableViewCell.self)
