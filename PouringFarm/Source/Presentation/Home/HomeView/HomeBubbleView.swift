@@ -46,7 +46,7 @@ final class HomeBubbleView: UIView, BaseView {
     }
     
     func configureView() {
-        commentLabel.text = PouringName.pouringComment()
+        commentLabel.text = RandomComment.set(SavingInfo.daejang)
     }
     
     @available(*, unavailable)

@@ -24,7 +24,7 @@ final class SelectPopUpView: UIView, BaseView {
     
     init(_ type: PouringName, _ level: Int) {
         
-        pouringImage = BaseUIImageView(type.imageName(level))
+        pouringImage = BaseUIImageView(PouringName.imageName(type.rawValue, level))
         
         super.init(frame: .zero)
         

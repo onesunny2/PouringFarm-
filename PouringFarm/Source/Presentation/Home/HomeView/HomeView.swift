@@ -24,7 +24,7 @@ final class HomeView: UIView, BaseView {
     
     override init(frame: CGRect) {
         
-        pouringImage = BaseUIImageView(PouringName.반짝푸링.imageName(1))
+        pouringImage = BaseUIImageView(PouringName.imageName(PouringName.반짝푸링.rawValue, 1))
         babButton = BaseConfigurationButton(buttonImage: SymbolImage.밥.img, buttonTitle: "밥먹기")
         waterButton = BaseConfigurationButton(buttonImage: SymbolImage.물.img, buttonTitle: "물먹기")
         

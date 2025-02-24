@@ -27,7 +27,7 @@ enum PouringName: String, CaseIterable {
             PouringInfo(
                 type: $0,
                 name: $0.rawValue,
-                image: $0.imageName(10)
+                image: PouringName.imageName($0.rawValue, 10)
             )
         }
         
@@ -35,17 +35,15 @@ enum PouringName: String, CaseIterable {
     }
     
     // 현재 레벨에 따른 이미지명
-    func imageName(_ level: Int = 1) -> String {
-        switch self {
-        case .따끔푸링: return "1-\(level)"
-        case .헤실푸링: return "2-\(level)"
-        case .반짝푸링: return "3-\(level)"
-        case .준비중: return "noImage"
+    static func imageName(_ type: String, _ level: Int = 1) -> String {
+        switch type {
+        case PouringName.따끔푸링.rawValue: return "1-\(level)"
+        case PouringName.헤실푸링.rawValue: return "2-\(level)"
+        case PouringName.반짝푸링.rawValue: return "3-\(level)"
+        case PouringName.준비중.rawValue: return "noImage"
+        default:
+            return "error"
         }
-    }
-    
-    static func pouringComment() -> String {
-        return randomComment.randomElement() ?? ""
     }
 }
 
@@ -54,11 +52,4 @@ private let pouringIntro: [PouringName: String] = [
     PouringName.헤실푸링: "헤헤헤헤헤%^^%\n이름에서부터 보이겠지만 저는 실없이 잘 웃는 헤실헤실 푸링이에요 헤헤..\n재미없는 농담을 하셔도 제가 항상 웃어드릴 수 있답니다 헤헤=_=",
     PouringName.반짝푸링: "나는야 꾸미기를 좋아하는 스타 슬라임~ 반짝반짝 푸링이야!\n주인공이 되고 싶다면 나와 함께해!\n내가 반짝반짝 후광을 비춰줄게!!",
     PouringName.준비중: "새로운 푸링이가 준비중입니다!\n빠른 시일내로 찾아올테니 다른 푸링이를 선택해주세요!"
-]
-
-private let randomComment: [String] = [
-    String(format: "저 달빛에 그려지는 %@님의 미소를 간직해", SavingInfo.daejang),
-    String(format: "그을진 저 노을 속에 %@님 얼굴이 떠올라", SavingInfo.daejang),
-    String(format: "%@님은 밤하늘에 놓인 작은 별 같아요 매일 밤마다 나를 찾아와", SavingInfo.daejang),
-    String(format: "또 찬바람이 불어와 %@님의 맘을 뒤흔들면 포근한 저 바람 되어 안아줄게요", SavingInfo.daejang)
 ]
