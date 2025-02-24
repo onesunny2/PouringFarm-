@@ -21,7 +21,8 @@ final class SelectPouringViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("푸링선택화면 VC Init")
+        
         basicSetting()
         bind()
     }

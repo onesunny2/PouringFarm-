@@ -21,7 +21,7 @@ final class SelectPopUpViewModel: BaseViewModel {
     }
     
     struct Output {
-
+        let doTransition: PublishRelay<Void>
     }
     
     init(_ selectedPouring: PouringName) {
@@ -36,6 +36,8 @@ final class SelectPopUpViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         
+        let doTransition = PublishRelay<Void>()
+        
         input.tappedStartButton
             .bind(with: self) { owner, _ in
                 
@@ -47,10 +49,10 @@ final class SelectPopUpViewModel: BaseViewModel {
                 }
                 
                 SavingInfo.isSelectFirst = true
+                doTransition.accept(())
             }
             .disposed(by: disposeBag)
         
-        // TODO: (질문) Output이 없는 경우 transform의 의미
-        return Output()
+        return Output(doTransition: doTransition)
     }
 }

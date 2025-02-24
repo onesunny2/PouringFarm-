@@ -29,7 +29,8 @@ final class SelectPopUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-print("팝업창 뜸")
+        print("선택팝업창 VC Init")
+        
         bind()
     }
  
@@ -42,6 +43,7 @@ print("팝업창 뜸")
         let input = SelectPopUpViewModel.Input(
             tappedStartButton: mainView.startButton.rx.tap
         )
+
         let output = viewModel.transform(input: input)
         
         mainView.cancelButton.rx.tap
@@ -50,14 +52,8 @@ print("팝업창 뜸")
             }
             .disposed(by: disposeBag)
         
-        // TODO: (질문) 한번 더 가공을 하느냐, projectedValue의 목적에 따라 쓰느냐
-        SavingInfo.$isSelectFirst
-            .bind(with: self) { owner, value in
-                guard let value, value else {
-                    print("저장된 선택유무 false")
-                    return
-                }
-                
+        output.doTransition
+            .bind(with: self) { owner, _ in
                 owner.viewTransition(type: .changeRootVC, vc: HomeViewController())
             }
             .disposed(by: disposeBag)

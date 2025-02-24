@@ -14,6 +14,7 @@ final class HomeViewModel: BaseViewModel {
     struct Input {
         let babTextfieldNumber: Observable<String?>
         let waterTextfieldNumber: Observable<String?>
+        let viewWillAppearTrigger: PublishRelay<Void>
     }
     
     struct Output {
@@ -23,6 +24,8 @@ final class HomeViewModel: BaseViewModel {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
+    
+    let viewWillAppearTrigger = PublishRelay<Void>()
     
     init() {
         print("Home VM Init")
@@ -55,6 +58,12 @@ final class HomeViewModel: BaseViewModel {
             randomComment.accept(())
         }
         .disposed(by: disposeBag)
+        
+        input.viewWillAppearTrigger
+            .bind(with: self) { owner, _ in
+                randomComment.accept(())
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             resetBabText: resetBabText,

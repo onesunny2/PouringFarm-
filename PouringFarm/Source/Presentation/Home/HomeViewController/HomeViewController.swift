@@ -10,17 +10,10 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-/*
- 
- userdefaults 키값 중 한개의 key 이름을 잘못 설정해서 초기화 하거나 해당 데이터를 저장하면 앱이 터지는 현상이 발생해서
- 부득이하게 home화면부터 시작하게 설정해두었습니다 ㅠㅠ 앱 둘러보시다가 혹시나 변경하기 메뉴에서 확인은 안누르고 봐주시면 감사하겠습니다...
- 
- */
-
 final class HomeViewController: UIViewController {
     
     private let mainView = HomeView()
-    private let viewMocel = HomeViewModel()
+    private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     
     private let rightBarButton = UIBarButtonItem(image: SymbolImage.프로필.img)
@@ -44,6 +37,12 @@ final class HomeViewController: UIViewController {
         view.endEditing(true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.viewWillAppearTrigger.accept(())
+    }
+    
     func bindData() {
         
         let bab = mainView.babButton.rx.tap
@@ -59,9 +58,10 @@ final class HomeViewController: UIViewController {
         
         let input = HomeViewModel.Input(
             babTextfieldNumber: bab,
-            waterTextfieldNumber: water
+            waterTextfieldNumber: water,
+            viewWillAppearTrigger: viewModel.viewWillAppearTrigger
         )
-        let output = viewMocel.transform(input: input)
+        let output = viewModel.transform(input: input)
  
         rightBarButton.rx.tap
             .bind(with: self) { owner, _ in
@@ -77,16 +77,11 @@ final class HomeViewController: UIViewController {
             .bind(to: mainView.waterTextfield.rx.text)
             .disposed(by: disposeBag)
         
-        // TODO: 개선점 힌트
-        output.randomComment
-            .bind(with: self, onNext: { owner, _ in
-                SavingInfo.$daejang
-                    .bind(with: self) { owner, name in
-                        guard let name else { return }
-                        owner.mainView.bubbleView.commentLabel.text = RandomComment.set(name)
-                    }
-                    .disposed(by: owner.disposeBag)
-            })
+        Observable.combineLatest(output.randomComment, SavingInfo.$daejang)
+            .bind(with: self) { owner, value in
+                guard let name = value.1 else { return }
+                owner.mainView.bubbleView.commentLabel.text = RandomComment.set(name)
+            }
             .disposed(by: disposeBag)
         
         // MARK: UI 자동 업데이트
