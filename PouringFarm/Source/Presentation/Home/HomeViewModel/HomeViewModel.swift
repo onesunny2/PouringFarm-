@@ -19,7 +19,7 @@ final class HomeViewModel: BaseViewModel {
     struct Output {
         let resetBabText: PublishRelay<String>
         let resetWaterText: PublishRelay<String>
-        let randomComment: PublishRelay<String>
+        let randomComment: PublishRelay<Void>
     }
     
     var disposeBag: DisposeBag = DisposeBag()
@@ -36,14 +36,14 @@ final class HomeViewModel: BaseViewModel {
         
         let resetBabText = PublishRelay<String>()
         let resetWaterText = PublishRelay<String>()
-        let randomComment = PublishRelay<String>()
+        let randomComment = PublishRelay<Void>()
         
         input.babTextfieldNumber
             .bind(with: self) { owner, text in
                 LevelManager.shared.getBabCount(text ?? "")
                 LevelManager.shared.caculateLevel()
                 resetBabText.accept("")
-                randomComment.accept(PouringName.pouringComment())
+                randomComment.accept(())
             }
             .disposed(by: disposeBag)
 
@@ -52,7 +52,7 @@ final class HomeViewModel: BaseViewModel {
             LevelManager.shared.getWaterCount(text ?? "")
             LevelManager.shared.caculateLevel()
             resetWaterText.accept("")
-            randomComment.accept(PouringName.pouringComment())
+            randomComment.accept(())
         }
         .disposed(by: disposeBag)
         

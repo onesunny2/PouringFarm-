@@ -77,8 +77,16 @@ final class HomeViewController: UIViewController {
             .bind(to: mainView.waterTextfield.rx.text)
             .disposed(by: disposeBag)
         
+        // TODO: 개선점 힌트
         output.randomComment
-            .bind(to: mainView.bubbleView.commentLabel.rx.text)
+            .bind(with: self, onNext: { owner, _ in
+                SavingInfo.$daejang
+                    .bind(with: self) { owner, name in
+                        guard let name else { return }
+                        owner.mainView.bubbleView.commentLabel.text = RandomComment.set(name)
+                    }
+                    .disposed(by: owner.disposeBag)
+            })
             .disposed(by: disposeBag)
         
         // MARK: UI 자동 업데이트
